@@ -1,0 +1,60 @@
+AllCops:
+  NewCops: disable
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/InverseMethods:
+  Exclude:
+    - "bin/**/*"
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - "bin/**/*"
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - "bin/**/*"
+
+Metrics/PerceivedComplexity:
+  Exclude:
+    - "bin/**/*"
+  
+Style/GlobalStdStream:
+  Exclude:
+    - "config/**/*"
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - "bin/**/*"
+
+Layout/LineLength:
+  Exclude:
+    - "bin/**/*"
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Layout/ArgumentAlignment:
+  Enabled: false
