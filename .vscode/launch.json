@@ -38,6 +38,16 @@
         "--runInBand",
         "--watchAll=false"
       ]
+    },
+    {
+      "name": "Rails server",
+      "type": "Ruby",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": [
+        "server",
+      ]
     }
   ]
 }

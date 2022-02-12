@@ -20,10 +20,6 @@ Style/InverseMethods:
 Style/Documentation:
   Enabled: false
 
-Metrics/MethodLength:
-  Exclude:
-    - "bin/**/*"
-
 Metrics/CyclomaticComplexity:
   Exclude:
     - "bin/**/*"
@@ -58,3 +54,16 @@ Style/Lambda:
 
 Layout/ArgumentAlignment:
   Enabled: false
+
+Metrics/MethodLength:
+  Max: 30
+  Exclude:
+    - "bin/**/*"
+
+Style/NumericLiterals:
+  Exclude:
+    - "db/**/*"
+
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - "db/**/*"

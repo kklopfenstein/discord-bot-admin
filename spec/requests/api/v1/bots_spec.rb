@@ -6,6 +6,19 @@ RSpec.describe "Api::V1::Bots", type: :request do
 
   let!(:bot) { Bot.create(name: name, token: token) }
 
+  let!(:bot_response) do
+    BotResponse.create(
+      bot_id: bot.id,
+      response: bot_response_response,
+      pattern: bot_response_pattern,
+      channel: bot_response_channel
+    )
+  end
+
+  let(:bot_response_response) { "test" }
+  let(:bot_response_pattern) { "pattern" }
+  let(:bot_response_channel) { "#general" }
+
   describe "GET /api/v1/bots" do
     subject do
       headers = { "ACCEPT": "application/json" }
@@ -142,6 +155,12 @@ RSpec.describe "Api::V1::Bots", type: :request do
       expect(response_data[:id]).to eq(expected_data[:id])
       expect(response_data[:name]).to eq(expected_data[:name])
       expect(response_data[:token]).to eq(expected_data[:token])
+
+      bot_response = response_data[:bot_responses][0].symbolize_keys
+      expect(bot_response).not_to eq(nil)
+      expect(bot_response[:response]).to eq(bot_response_response)
+      expect(bot_response[:pattern]).to eq(bot_response_pattern)
+      expect(bot_response[:channel]).to eq(bot_response_channel)
     end
   end
 end

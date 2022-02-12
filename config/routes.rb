@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :bots, only: [:index, :create, :update, :show]
+      get "bot_manage/:id", to: "bot_manage#show"
+      put "bot_manage/:id/start", to: "bot_manage#start"
+      put "bot_manage/:id/stop", to: "bot_manage#stop"
+      resources :bot_responses, only: [:create, :update, :show, :destroy]
     end
   end
 

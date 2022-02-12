@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import BotForm from './BotForm';
+import Button from '@mui/material/Button';
 
 export default () => {
   const [formErrors, setFormErrors] = useState();
@@ -11,11 +12,10 @@ export default () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     const updateData = {...data, id: params.botId };
-    axios.post(`/api/v1/bots/${updateData.id}`, { bot: updateData })
+    axios.put(`/api/v1/bots/${updateData.id}`, { bot: updateData })
     .then(() => {
-      navigate('/');
+      navigate('/bots');
     })
     .catch((error) => {
       console.error(error);
@@ -26,10 +26,8 @@ export default () => {
   };
 
   const loadBot = (id) => {
-    console.log(id);
     axios.get(`/api/v1/bots/${id}`)
     .then((response) => {
-      console.log(response.data);
       setBot(response.data);
     })
     .catch((error) => {
@@ -48,14 +46,17 @@ export default () => {
   let response = <div>Loading...</div>
 
   if (bot) {
-    console.log('bot:', bot);
     response = <BotForm onSubmit={onSubmit} bot={bot} formErrors={formErrors}/>
   }
 
   return (
     <>
+    <Link to="/bots">
+      <Button variant="outline">
+        Return to bots
+      </Button>
+    </Link>
     {response}
-    <Link to="/bots">Return to bots</Link>
     </>
   );
 };

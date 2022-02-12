@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import BotForm from './BotForm';
+import Button from '@mui/material/Button';
 
 export default () => {
   const [formErrors, setFormErrors] = useState();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
     axios.post('/api/v1/bots', { bot: data })
     .then(() => {
       navigate('/bots');
@@ -28,8 +28,12 @@ export default () => {
 
   return (
     <>
+      <Link to="/bots">
+        <Button variant="outline">
+          Return to bots
+        </Button>
+      </Link>
       <BotForm onSubmit={onSubmit} bot={bot} formErrors={formErrors}/>
-      <Link to="/bots">Return to bots</Link>
     </>
   );
 };

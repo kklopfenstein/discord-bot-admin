@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_205_204_733) do
+ActiveRecord::Schema.define(version: 2022_02_12_122900) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bot_responses", force: :cascade do |t|
+    t.string "pattern"
+    t.bigint "bot_id"
+    t.string "response"
+    t.string "channel"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bot_id"], name: "index_bot_responses_on_bot_id"
+  end
 
   create_table "bots", force: :cascade do |t|
     t.string "name"
@@ -20,4 +31,6 @@ ActiveRecord::Schema.define(version: 20_220_205_204_733) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
+
+  add_foreign_key "bot_responses", "bots"
 end

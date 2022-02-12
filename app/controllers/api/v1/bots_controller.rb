@@ -28,7 +28,8 @@ class Api::V1::BotsController < ApiController
 
   def show
     if @bot.present?
-      render json: @bot
+      @bot.bot_responses.load
+      render json: @bot, include: [:bot_responses]
     else
       render json: { success: false }, status: :not_found
     end
