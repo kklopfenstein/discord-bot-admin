@@ -12,12 +12,16 @@ class Api::V1::BotResponsesController < ApiController
   end
 
   def update
-    @bot_response.assign_attributes(_bot_params)
+    if @bot_response.present?
+      @bot_response.assign_attributes(_bot_params)
 
-    if @bot_response.save
-      render json: { success: true }
+      if @bot_response.save
+        render json: { success: true }
+      else
+        render json: @bot_response.errors, status: :unprocessable_entity
+      end
     else
-      render json: @bot_response.errors, status: :unprocessable_entity
+      render json: { success: false }, status: :not_found
     end
   end
 

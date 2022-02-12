@@ -79,4 +79,73 @@ RSpec.describe "Api::V1::BotResponsesController", type: :request do
       end
     end
   end
+
+  describe "PUT /api/v1/bot_responses/:id" do
+    subject do
+      headers = { "ACCEPT": "application/json" }
+      put "/api/v1/bot_responses/#{bot_response_id}", params: params, headers: headers
+    end
+
+    let(:updated_bot_response_channel) { "#{bot_response_channel}-changed" }
+
+    let(:params) do
+      {
+        bot_response: {
+          response: bot_response_response,
+          pattern: bot_response_pattern,
+          channel: updated_bot_response_channel,
+          bot_id: bot.id
+        }
+      }
+    end
+
+    it "returns successful response and updates bot response" do
+      subject
+      body = JSON.parse(response.body)
+      expect(body["success"]).to eq(true)
+      bot_response.reload
+      expect(bot_response.channel).to eq(updated_bot_response_channel)
+    end
+
+    context "with invalid data" do
+      let(:updated_bot_response_channel) { "invalid" }
+
+      it "returns unprocessable_entity response" do
+        expect { subject }.not_to(change { BotResponse.find(bot_response.id).channel })
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context "with id that does not exist" do
+      let(:bot_response) { nil }
+      let(:bot_response_id) { 1 }
+
+      it "returns not_found response" do
+        subject
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe "DELETE /api/v1/bot_responses/:id" do
+    subject do
+      headers = { "ACCEPT": "application/json" }
+      delete "/api/v1/bot_responses/#{bot_response_id}", headers: headers
+    end
+
+    it "returns a successful response and deletes bot response" do
+      expect { subject }.to(change { BotResponse.count }.from(1).to(0))
+      expect(response).to have_http_status(:ok)
+    end
+
+    context "with id that does not exist" do
+      let(:bot_response) { nil }
+      let(:bot_response_id) { 1 }
+
+      it "returns not_found response" do
+        subject
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
