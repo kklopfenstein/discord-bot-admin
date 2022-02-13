@@ -75,13 +75,17 @@ export default () => {
               <TableCell>Status</TableCell>
               <TableCell>{botManageInfo?.started ? 'Started' : 'Stopped'}</TableCell>
             </TableRow>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell>
+                <Button onClick={startStopBot} variant="outline">{botManageInfo?.started ? 'Stop' : 'Start'}</Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
       <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-         <Button onClick={startStopBot} variant="outline">{botManageInfo?.started ? 'Stop' : 'Start'}</Button>
-      </Box>
-      <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+        <h2>Bot Responses:</h2>
         <BotResponsesList botId={botInfo?.id} botResponses={botInfo?.bot_responses} reloadData={() => loadBotInfo(params.botId)}/>
       </Box>
    </>

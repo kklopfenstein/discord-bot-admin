@@ -23,82 +23,84 @@ export default (props) => {
     reset();
   };
 
-  const deleteButton = props.botResponse?.id ? (
-      <Box sx={{margin: 5}}>
-        <Button onClick={() => props.onDelete(props.botResponse?.id)}>Delete</Button>
-      </Box>) : '';
+  const deleteButton = props.botResponse?.id ? (<Button onClick={() => props.onDelete(props.botResponse?.id)}>Delete</Button>) : '';
 
 
   return (
-    <form>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableBody>
-            <TableRow>
-              <TableCell>Response</TableCell>
-              <TableCell>
-                <FormControl fullWidth>
-                  <Controller
-                    name="response"
-                    control={control}
-                    rules={{ required: true, maxLength: 200 }}
-                    defaultValue={props.botResponse?.response}
-                    render={({ field }) => (
-                      <TextField {...field} label="Response" variant="outlined"/>
-                    )}/>
-                  <div>
-                    {errors.response?.type === 'required' && <span>Response is required.</span>}
-                    {errors.response?.type === 'maxLength' && <span>Response cannot be more than 200 characters long.</span>}
-                  </div>
-                </FormControl>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Pattern</TableCell>
-              <TableCell>
-                <FormControl fullWidth>
-                  <Controller
-                    name="pattern"
-                    control={control}
-                    rules={{ required: true, maxLength: 100 }}
-                    defaultValue={props.botResponse?.pattern}
-                    render={({ field }) => (
-                      <TextField {...field} label="Pattern" variant="outlined"/>
-                    )}/>
-                  <div>
-                    {errors.pattern?.type === 'required' && <span>Pattern is required.</span>}
-                    {errors.pattern?.type === 'maxLength' && <span>Pattern cannot be more than 100 characters long.</span>}
-                  </div>
-                </FormControl>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Channel</TableCell>
-              <TableCell>
-                <FormControl fullWidth>
-                  <Controller
-                    name="channel"
-                    control={control}
-                    rules={{ required: true, maxLength: 100, pattern: /^\#[A-Za-z0-9\-]+$/i }}
-                    defaultValue={props.botResponse?.channel}
-                    render={({ field }) => (
-                      <TextField {...field} label="#channel" variant="outlined"/>
-                    )}/>
-                  <div>
-                    {errors.channel?.type === 'required' && <span>Channel is required.</span>}
-                    {errors.channel?.type === 'maxLength' && <span>Channel cannot be more than 100 characters long.</span>}
-                    {errors.channel?.type === 'pattern' && <span>Channel must be a valid channel name.</span>}
-                  </div>
-                </FormControl>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box sx={{margin: 5}}>
-        <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
-      </Box>
-      {deleteButton}
-    </form>
+    <Box sx={{marginTop: 2, marginBottom: 2}}>
+      <form>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }}>
+            <TableBody>
+              <TableRow>
+                <TableCell>Response</TableCell>
+                <TableCell>
+                  <FormControl fullWidth>
+                    <Controller
+                      name="response"
+                      control={control}
+                      rules={{ required: true, maxLength: 200 }}
+                      defaultValue={props.botResponse?.response}
+                      render={({ field }) => (
+                        <TextField {...field} label="Response" variant="outlined"/>
+                      )}/>
+                    <div>
+                      {errors.response?.type === 'required' && <span>Response is required.</span>}
+                      {errors.response?.type === 'maxLength' && <span>Response cannot be more than 200 characters long.</span>}
+                    </div>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Pattern</TableCell>
+                <TableCell>
+                  <FormControl fullWidth>
+                    <Controller
+                      name="pattern"
+                      control={control}
+                      rules={{ required: true, maxLength: 100 }}
+                      defaultValue={props.botResponse?.pattern}
+                      render={({ field }) => (
+                        <TextField {...field} label="Pattern" variant="outlined"/>
+                      )}/>
+                    <div>
+                      {errors.pattern?.type === 'required' && <span>Pattern is required.</span>}
+                      {errors.pattern?.type === 'maxLength' && <span>Pattern cannot be more than 100 characters long.</span>}
+                    </div>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Channel</TableCell>
+                <TableCell>
+                  <FormControl fullWidth>
+                    <Controller
+                      name="channel"
+                      control={control}
+                      rules={{ required: true, maxLength: 100, pattern: /^\#[A-Za-z0-9\-]+$/i }}
+                      defaultValue={props.botResponse?.channel}
+                      render={({ field }) => (
+                        <TextField {...field} label="#channel" variant="outlined"/>
+                      )}/>
+                    <div>
+                      {errors.channel?.type === 'required' && <span>Channel is required.</span>}
+                      {errors.channel?.type === 'maxLength' && <span>Channel cannot be more than 100 characters long.</span>}
+                      {errors.channel?.type === 'pattern' && <span>Channel must be a valid channel name.</span>}
+                    </div>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>
+                  <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
+                  {deleteButton}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </form>
+    </Box>
   );
 };
