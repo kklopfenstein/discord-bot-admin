@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 export default (props) => {
-  const { handleSubmit, formState: { errors }, control } = useForm();
+  const { handleSubmit, formState: { errors }, control, reset } = useForm();
 
   const onSubmit = (formData) => {
     if (props.botResponse?.id) {
@@ -20,7 +20,13 @@ export default (props) => {
     } else {
       props.onSubmitNew({...formData, bot_id: props.botId});
     }
+    reset();
   };
+
+  const deleteButton = props.botResponse?.id ? (
+      <Box sx={{margin: 5}}>
+        <Button onClick={() => props.onDelete(props.botResponse?.id)}>Delete</Button>
+      </Box>) : '';
 
 
   return (
@@ -92,6 +98,7 @@ export default (props) => {
       <Box sx={{margin: 5}}>
         <Button onClick={handleSubmit(onSubmit)}>Submit</Button>
       </Box>
+      {deleteButton}
     </form>
   );
 };

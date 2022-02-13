@@ -26,10 +26,21 @@ export default (props) => {
     });
   };
 
+  const onDelete = (id) => {
+    axios.delete(`/api/v1/bot_responses/${id}`)
+    .then((data) => {
+      console.log(data);
+      props.reloadData();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <>
     {props.botResponses?.map((botResponse) => (
-      <BotResponseForm key={botResponse.id} botResponse={botResponse} onSubmitEdit={onSubmitEdit} />
+      <BotResponseForm key={botResponse.id} botResponse={botResponse} onSubmitEdit={onSubmitEdit} onDelete={onDelete}/>
     ))}
     <BotResponseForm key="new" botId={props.botId} onSubmitNew={onSubmitNew} botResponse={{ pattern: '', response: '', channel: '' }} />
     </>
