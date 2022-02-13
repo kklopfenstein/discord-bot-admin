@@ -5,7 +5,7 @@ class BotService
     return { message: "Already started.", success: false } if _bots[bot.token] && _started?(bot)
 
     _bots[bot.token] ||= Discordrb::Bot.new(token: bot.token)
-    _setup!(_bots[bot.token])
+    _setup!(_bots[bot.token], bot)
 
     { success: true }
   end
@@ -36,9 +36,11 @@ class BotService
     _bots[bot.token].connected?
   end
 
-  private_class_method def self._setup!(discord_bot)
-    discord_bot.message(containing: %w[hi nope yep]) do |event|
-      event.respond "hai2u"
+  private_class_method def self._setup!(discord_bot, bot)
+    bot.bot_responses.each do |bot_response|
+      discord_bot.message(containing: bot_response.pattern, channel: bot_response.channel) do |event|
+        event.respond bot_response.response
+      end
     end
 
     discord_bot.run(true)

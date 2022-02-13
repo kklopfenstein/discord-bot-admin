@@ -2,10 +2,13 @@ require "rails_helper"
 
 RSpec.describe BotResponse, type: :model do
   describe "validations" do
-    subject { described_class.new(pattern: pattern, response: response, channel: channel) }
+    subject { described_class.new(pattern: pattern, response: response, channel: channel, bot: bot) }
     let(:pattern) { "a pattern" }
     let(:response) { "a response" }
     let(:channel) { "#channel" }
+    let(:name) { "test" }
+    let(:token) { "OTM532IwNzgyMDEzNDZhhhgw.Yd6C6Q.Pslx7BdYAlmCsTkJDndWHv8be3z" }
+    let(:bot) { Bot.create(name: name, token: token) }
 
     context "valid" do
       it "is valid" do
@@ -109,6 +112,20 @@ RSpec.describe BotResponse, type: :model do
           bot_response.save
           expect(bot_response.errors[:channel]).to include("Must be a valid channel name.")
         end
+      end
+    end
+
+    context "bot not present" do
+      let(:bot) { nil }
+
+      it "is invalid" do
+        expect(subject.save).to eq(false)
+      end
+
+      it "has error message" do
+        bot_response = subject
+        bot_response.save
+        expect(bot_response.errors[:bot]).to include("can't be blank")
       end
     end
   end

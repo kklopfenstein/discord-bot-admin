@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import BotResponsesList from './BotResponsesList';
 
 export default () => {
   const params = useParams();
@@ -79,6 +80,9 @@ export default () => {
       </TableContainer>
       <Box sx={{ marginTop: 2, marginBottom: 2 }}>
          <Button onClick={startStopBot} variant="outline">{botManageInfo?.started ? 'Stop' : 'Start'}</Button>
+      </Box>
+      <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+        <BotResponsesList botId={botInfo?.id} botResponses={botInfo?.bot_responses} reloadData={() => loadBotInfo(params.botId)}/>
       </Box>
    </>
   );

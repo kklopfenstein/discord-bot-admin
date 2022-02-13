@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 
 export default (props) => {
-  const { register, handleSubmit, formState: { errors }, control } = useForm();
+  const { handleSubmit, formState: { errors }, control } = useForm();
 
   return (
     <form>

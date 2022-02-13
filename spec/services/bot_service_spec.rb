@@ -4,6 +4,10 @@ RSpec.describe BotService do
   let(:name) { "test" }
   let(:token) { "OTM532IwNzgyMDEzNDZhhhgw.Yd6C6Q.Pslx7BdYAlmCsTkJDndWHv8be3z" }
   let!(:bot) { Bot.create(name: name, token: token) }
+  let(:response) { "test response" }
+  let(:pattern) { "pattern" }
+  let(:channel) { "#channel" }
+  let!(:bot_response) { BotResponse.create(response: response, channel: channel, pattern: pattern, bot: bot) }
   let(:id) { bot.id }
   let(:discord_bot) { double("bot") }
 
@@ -24,7 +28,7 @@ RSpec.describe BotService do
     end
 
     it "initializes bot and calls message, and run" do
-      expect(discord_bot).to receive(:message).once
+      expect(discord_bot).to receive(:message).with(containing: pattern, channel: channel)
       expect(discord_bot).to receive(:run).once
       expect(subject).to eq(success: true)
     end
